@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>1-test</title>
+</head>
+<body>
+    Задача: написать функцию, которая проверяет все ли символы в строке встречаются один раз.
+    <script>
+        const validString = 'abcderfgthk';
+        const errorString = 'adadaeerq';
+
+        const check = str => new Set(str).size === str.length;
+
+        console.log('validString', check(validString));
+        console.log('errorString', check(errorString));
+        
+    </script>
+</body>
+</html>

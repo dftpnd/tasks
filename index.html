@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="index.css"> 
+  <title>Index</title>
+</head>
+<body>
+ <div class="drow">
+     <div id="herou" class="ranger">press</div>
+ </div>
+
+ <script>
+    var classname = document.getElementsByClassName("ranger");
+    console.log('classname', classname)
+    var myFunction = function() {
+        alert('asd');
+    };
+
+    classname.addEventListener('click', myFunction, false);
+ </script>
+</body>
+</html>

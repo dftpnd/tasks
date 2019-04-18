@@ -1,0 +1,165 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Yndex Test</title>
+</head>
+<body>
+    <script>
+    
+
+/**
+Нужно реализовать функцию, которая принимает на вход строку
+с римским числом и конвертирует его в арабское число.
+На вход функции отдаются только валидные римские числа.
+Перед каждой бóльшей цифрой может идти только одна меньшая, например: XIX.
+console.log(roman2arabic('III') === 3);
+console.log(roman2arabic('V') === 5);
+console.log(roman2arabic('IX') === 9);
+console.log(roman2arabic('MXM') === 1990);
+console.log(roman2arabic('MXMIV') === 1994);
+*/
+// 1000=1000
+// 990=1000-10
+// 4=5-1
+    const romans = {
+        'I': 1,
+        'V': 5,
+        'X': 10,
+        'L': 50,
+        'C': 100,
+        'D': 500,
+        'M': 1000
+    };
+
+    function roman2arabicRecursion(nums){
+        const numsArr = nums.split('');
+        debugger;
+        return (function recursion (arr, index, sum = 0) {
+            const current = arr[index];
+            const prev = arr[index + 1] || null;
+
+            if(prev && romans[current] < romans[prev]){
+                sum -= romans[current];
+                debugger;
+            } else {
+                sum += romans[current];
+                debugger;
+            }
+            
+            if(index === 0) return sum;
+            debugger;
+            return recursion(arr, index - 1, sum);
+        }(numsArr, numsArr.length - 1))
+    };
+
+    // MXMIV
+    function roman2arabic(nums){
+        let sum = 0;
+        const numsArr = nums.split('');
+        const isSimpleRoman = (num) => num in romans;
+        const arabicCompare = (current, prev) => romans[current] < romans[prev];
+    
+        const orderNums = (acc, current) => {
+            const prev = acc[acc.length - 1] || null;
+            const arabCurrent = romans[current];
+
+            if (prev && isSimpleRoman(prev) && arabicCompare(current, prev)) {
+                debugger;
+                sum -= arabCurrent;
+                acc.pop() && acc.push(current + prev);
+            } else {
+                debugger;
+                sum += arabCurrent;
+                acc.push(current);
+            }
+            return acc;
+        };
+
+        return numsArr.reduceRight(orderNums, []) && sum;
+    }
+
+    console.log('roman2arabicRecursion(MXMIV)', roman2arabicRecursion('MXMIV'));
+
+
+/*
+    Дана строка, состоящая из букв A-Z:
+    "AAAABBBCCXYZDDDDEEEFFFAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+    Нужно написать функцию RLE, которая на выходе даст строку вида:
+    "A4B3C2XYZD4E3F3A6B28"
+    И сгенерирует любую ошибку, если на вход пришла невалидная строка.
+    
+    Пояснения:
+    1. Если символ встречается 1 раз, он остается без изменений
+    2. Если символ повторяется более 1 раза, к нему добавляется количество повторений
+*/
+    
+    function RLE(longString){
+        const toString = (acc, curr) => {
+            for(key in curr) acc.push(key + curr[key])
+
+            return acc;
+        }
+
+        return (function compress(arrLetter, index = 0, acc = []){
+            const curr = arrLetter[index]  || false;
+            const prev = arrLetter[index -1 ] || false;
+            
+            if(prev && prev === curr){
+                let oldValue = acc[acc.length - 1];
+                acc[acc.length - 1] = { [curr] : oldValue[curr] + 1 };
+            }else if (curr) {
+                acc.push({ [curr] : 1 });
+            }
+
+            if(index === arrLetter.length){
+                return acc;
+            }
+
+            return compress(arrLetter, index + 1, acc);
+        }(longString.split('')).reduce(toString, []).join(''));
+    }
+
+    console.log('RLE(AAAABBBCCXYZDDDDEEEFFFAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBB)', RLE('AAAABBBCCXYZDDDDEEEFFFAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBB'));
+
+
+
+    /*
+        A. Камни и украшения
+        Даны две строки строчных латинских символов: строка J и строка S. Символы,
+        входящие в строку J, — «драгоценности», входящие в строку S — «камни».
+        Нужно определить, какое количество символов из S одновременно являются «драгоценностями». 
+        Проще говоря, нужно проверить, какое количество символов из S входит в J.
+        Это разминочная задача, к которой мы размещаем готовые решения. 
+        Она очень простая и нужна для того, чтобы вы могли познакомиться с нашей автоматической системой проверки решений.
+        Ввод и вывод осуществляется через файлы, либо через стандартные потоки ввода-вывода, как вам удобнее.
+
+        Ввод: 
+        ab
+        aabbccd
+
+        Вывод:
+        4
+
+    */
+
+    (function(){
+        function jewelrySearch(jewelry, source){
+            const jewelryList = new Set(jewelry);
+            const sourceList = [...source];
+            
+            return sourceList.reduce((acc, current)=>{
+                if(jewelryList.has(current)){
+                    acc += 1;
+                }
+
+                return acc;
+            }, 0);
+        }
+
+        console.log('jewelrySearch', jewelrySearch('ab', 'aabbccd'))
+    }())
+    
+    </script>
+</body>
+</html>

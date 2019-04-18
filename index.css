@@ -1,0 +1,17 @@
+.drow {
+    border: 1px solid black;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 50%;
+    margin-left: -50px;
+    margin-top:50px;
+}
+
+.ranger {
+    position: absolute;
+    text-align: center;
+    border: 1px solid red;
+    width: 100%;
+    top:40px;
+}
